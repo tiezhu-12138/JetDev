@@ -51,6 +51,8 @@
   --colour-teal-wash: rgb(54 197 173 / 8%);
   --colour-orange-wash: rgb(240 163 90 / 8%);
   --colour-selection: rgb(91 141 255 / 30%);
+  --colour-blue-highlight: rgb(91 141 255 / 34%);
+  --colour-teal-highlight: rgb(54 197 173 / 28%);
 
   /* Semantic colours */
   --colour-surface-page: var(--colour-neutral-950);
@@ -75,9 +77,14 @@
   --colour-ambient-blue: var(--colour-blue-wash);
   --colour-ambient-teal: var(--colour-teal-wash);
   --colour-ambient-orange: var(--colour-orange-wash);
-  --colour-logo-flow-1: var(--colour-blue-500);
-  --colour-logo-flow-2: var(--colour-teal-500);
-  --colour-logo-flow-3: var(--colour-orange-500);
+  --colour-logo-liquid-primary: var(--colour-blue-500);
+  --colour-logo-liquid-secondary: var(--colour-teal-500);
+  --colour-logo-liquid-tertiary: var(--colour-orange-500);
+  --colour-logo-liquid-highlight: var(--colour-neutral-50);
+  --colour-logo-liquid-shadow: var(--colour-neutral-1000);
+  --colour-logo-metal-shadow: var(--colour-neutral-700);
+  --colour-highlight-start: var(--colour-blue-highlight);
+  --colour-highlight-end: var(--colour-teal-highlight);
   --colour-particle-primary: var(--colour-blue-600);
   --colour-particle-secondary: var(--colour-teal-500);
   --colour-particle-tertiary: var(--colour-orange-500);
@@ -143,6 +150,7 @@
   --space-card-padding: clamp(1.5rem, 4vw, 3.5rem);
   --space-card-gap: clamp(1.5rem, 3vw, 2.5rem);
   --space-list-gap: var(--space-4);
+  --space-highlight-inline: var(--space-1);
   --space-anchor-offset: 7rem;
   --container-content-max: 78rem;
   --container-navigation-max: 76rem;
@@ -159,26 +167,36 @@
   --layout-contact-links: 4fr;
 
   /* Brand mark */
-  --gradient-logo-stop-start: 0%;
-  --gradient-logo-stop-teal: 33.333%;
-  --gradient-logo-stop-orange: 66.667%;
-  --gradient-logo-stop-end: 100%;
+  --gradient-logo-metal-blue-start: 0%;
+  --gradient-logo-metal-teal-first: 16%;
+  --gradient-logo-metal-highlight-first: 30%;
+  --gradient-logo-metal-shadow: 44%;
+  --gradient-logo-metal-teal-second: 58%;
+  --gradient-logo-metal-orange: 72%;
+  --gradient-logo-metal-highlight-second: 86%;
+  --gradient-logo-metal-blue-end: 100%;
   --aspect-ratio-logo-mark: 1460 / 557;
 
   /* Component sizing */
   --size-viewport-block-min: 100dvh;
   --size-navigation-min: 3.75rem;
   --size-navigation-logo-inline: 3.625rem;
+  --size-logo-layer: 100%;
   --size-control-block: 2.75rem;
   --size-control-block-large: 3rem;
   --size-focus-offset: 0.1875rem;
   --size-section-rule: 4rem;
   --size-project-number: clamp(3rem, 7vw, 6rem);
+  --size-text-reveal-offset: var(--space-2);
   --size-particle-canvas: 100%;
   --aspect-ratio-project: 16 / 10;
   --opacity-muted: 0.72;
   --opacity-grid: 0.42;
   --opacity-particle-layer: 0.58;
+  --opacity-content-hidden: 0;
+  --opacity-content-visible: 1;
+  --opacity-logo-liquid-hidden: 0;
+  --opacity-logo-liquid-ready: 1;
 
   /* Particle settings */
   --particle-quantity: 34;
@@ -190,16 +208,26 @@
   --particle-speed-max: 8.5;
   --particle-dpr-max: 1.5;
 
+  /* Liquid logo settings */
+  --logo-liquid-dpr-max: 1.5;
+  --logo-liquid-speed: 0.12;
+  --logo-liquid-pattern-scale: 0.5;
+  --logo-liquid-distortion: 0.03;
+  --logo-liquid-highlight-width: 0.11;
+  --logo-liquid-highlight-strength: 0.78;
+  --logo-liquid-shadow-strength: 0.38;
+
   /* Borders, approved geometry and elevation */
   --border-width-thin: 1px;
   --border-width-focus: 2px;
   --border-style-default: solid;
   --radius-none: 0;
-  --radius-navigation-small: 0.75rem;
+  --radius-navigation-small: 0.5rem;
   --shadow-none: none;
   --shadow-navigation: 0 1.5rem 5rem rgb(0 0 0 / 34%);
   --filter-navigation-blur: 1.125rem;
   --filter-navigation-saturation: 135%;
+  --filter-text-reveal-blur: 0.5rem;
 
   /* Background treatments */
   --background-hero-grid: linear-gradient(
@@ -219,6 +247,15 @@
     ),
     linear-gradient(225deg, var(--colour-ambient-teal), transparent 28%),
     linear-gradient(18deg, var(--colour-ambient-orange), transparent 24%);
+  --background-text-highlight: linear-gradient(
+    to right,
+    var(--colour-highlight-start),
+    var(--colour-highlight-end)
+  );
+  --background-position-text-highlight: left bottom;
+  --background-repeat-text-highlight: no-repeat;
+  --background-size-text-highlight-hidden: 0% 100%;
+  --background-size-text-highlight-visible: 100% 100%;
   --size-hero-grid: 4rem 4rem;
 
   /* Layers */
@@ -233,9 +270,11 @@
   --motion-duration-fast: 120ms;
   --motion-duration-standard: 220ms;
   --motion-duration-slow: 520ms;
-  --motion-duration-logo-flow: 8000ms;
+  --motion-duration-text-reveal: var(--motion-duration-slow);
+  --motion-duration-text-highlight: var(--motion-duration-slow);
+  --motion-delay-text-highlight: var(--motion-duration-standard);
+  --motion-duration-logo-ready: var(--motion-duration-standard);
   --motion-easing-standard: cubic-bezier(0.16, 1, 0.3, 1);
-  --motion-easing-logo-flow: linear;
 }
 
 @media (min-width: 48rem) {
@@ -394,79 +433,81 @@ ol {
 }
 
 .jet-logo {
+  position: relative;
   display: block;
-  overflow: visible;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: var(--radius-none);
 }
 
-.jet-logo__stop--start,
-.jet-logo__stop--end {
-  offset: var(--gradient-logo-stop-start);
-  stop-color: var(--colour-logo-flow-1);
-  animation: jet-logo-colour-flow-primary var(--motion-duration-logo-flow)
-    var(--motion-easing-logo-flow) infinite;
+.jet-logo__fallback,
+.jet-logo__canvas {
+  position: absolute;
+  inset: var(--space-0);
+  display: block;
+  inline-size: var(--size-logo-layer);
+  block-size: var(--size-logo-layer);
+  pointer-events: none;
+  transition: opacity var(--motion-duration-logo-ready)
+    var(--motion-easing-standard);
 }
 
-.jet-logo__stop--teal {
-  offset: var(--gradient-logo-stop-teal);
-  stop-color: var(--colour-logo-flow-2);
-  animation: jet-logo-colour-flow-secondary var(--motion-duration-logo-flow)
-    var(--motion-easing-logo-flow) infinite;
+.jet-logo__fallback {
+  z-index: var(--layer-background);
+  opacity: var(--opacity-logo-liquid-ready);
 }
 
-.jet-logo__stop--orange {
-  offset: var(--gradient-logo-stop-orange);
-  stop-color: var(--colour-logo-flow-3);
-  animation: jet-logo-colour-flow-tertiary var(--motion-duration-logo-flow)
-    var(--motion-easing-logo-flow) infinite;
+.jet-logo__canvas {
+  z-index: var(--layer-base);
+  opacity: var(--opacity-logo-liquid-hidden);
 }
 
-.jet-logo__stop--end {
-  offset: var(--gradient-logo-stop-end);
+.jet-logo[data-liquid-ready="true"] .jet-logo__fallback {
+  opacity: var(--opacity-logo-liquid-hidden);
 }
 
-@keyframes jet-logo-colour-flow-primary {
-  0%,
-  100% {
-    stop-color: var(--colour-logo-flow-1);
-  }
-
-  33.333% {
-    stop-color: var(--colour-logo-flow-2);
-  }
-
-  66.667% {
-    stop-color: var(--colour-logo-flow-3);
-  }
+.jet-logo[data-liquid-ready="true"] .jet-logo__canvas {
+  opacity: var(--opacity-logo-liquid-ready);
 }
 
-@keyframes jet-logo-colour-flow-secondary {
-  0%,
-  100% {
-    stop-color: var(--colour-logo-flow-2);
-  }
-
-  33.333% {
-    stop-color: var(--colour-logo-flow-3);
-  }
-
-  66.667% {
-    stop-color: var(--colour-logo-flow-1);
-  }
+.jet-logo__metal--blue-start {
+  offset: var(--gradient-logo-metal-blue-start);
+  stop-color: var(--colour-logo-liquid-primary);
 }
 
-@keyframes jet-logo-colour-flow-tertiary {
-  0%,
-  100% {
-    stop-color: var(--colour-logo-flow-3);
-  }
+.jet-logo__metal--teal-first {
+  offset: var(--gradient-logo-metal-teal-first);
+  stop-color: var(--colour-logo-liquid-secondary);
+}
 
-  33.333% {
-    stop-color: var(--colour-logo-flow-1);
-  }
+.jet-logo__metal--highlight-first {
+  offset: var(--gradient-logo-metal-highlight-first);
+  stop-color: var(--colour-logo-liquid-highlight);
+}
 
-  66.667% {
-    stop-color: var(--colour-logo-flow-2);
-  }
+.jet-logo__metal--shadow {
+  offset: var(--gradient-logo-metal-shadow);
+  stop-color: var(--colour-logo-metal-shadow);
+}
+
+.jet-logo__metal--teal-second {
+  offset: var(--gradient-logo-metal-teal-second);
+  stop-color: var(--colour-logo-liquid-secondary);
+}
+
+.jet-logo__metal--orange {
+  offset: var(--gradient-logo-metal-orange);
+  stop-color: var(--colour-logo-liquid-tertiary);
+}
+
+.jet-logo__metal--highlight-second {
+  offset: var(--gradient-logo-metal-highlight-second);
+  stop-color: var(--colour-logo-liquid-highlight);
+}
+
+.jet-logo__metal--blue-end {
+  offset: var(--gradient-logo-metal-blue-end);
+  stop-color: var(--colour-logo-liquid-primary);
 }
 
 .site-navigation__links,
@@ -940,6 +981,41 @@ ol {
   font-size: var(--font-size-lead);
 }
 
+.blur-reveal {
+  opacity: var(--opacity-content-hidden);
+  filter: blur(var(--filter-text-reveal-blur));
+  transform: translateY(var(--size-text-reveal-offset));
+  transition:
+    opacity var(--motion-duration-text-reveal) var(--motion-easing-standard),
+    filter var(--motion-duration-text-reveal) var(--motion-easing-standard),
+    transform var(--motion-duration-text-reveal) var(--motion-easing-standard);
+  will-change: opacity, filter, transform;
+}
+
+.blur-reveal[data-entered="true"] {
+  opacity: var(--opacity-content-visible);
+  filter: none;
+  transform: none;
+  will-change: auto;
+}
+
+.text-highlight {
+  padding-inline: var(--space-highlight-inline);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  background-image: var(--background-text-highlight);
+  background-repeat: var(--background-repeat-text-highlight);
+  background-position: var(--background-position-text-highlight);
+  background-size: var(--background-size-text-highlight-hidden);
+  color: var(--colour-text-primary);
+  transition: background-size var(--motion-duration-text-highlight)
+    var(--motion-easing-standard) var(--motion-delay-text-highlight);
+}
+
+.text-highlight[data-active="true"] {
+  background-size: var(--background-size-text-highlight-visible);
+}
+
 .about-layout__copy strong {
   color: var(--colour-text-primary);
   font-weight: var(--font-weight-medium);
@@ -1166,8 +1242,23 @@ ol {
     animation-iteration-count: 1 !important;
   }
 
-  .jet-logo__stop {
-    animation: none !important;
+  .jet-logo__canvas {
+    opacity: var(--opacity-logo-liquid-hidden) !important;
+  }
+
+  .jet-logo__fallback {
+    opacity: var(--opacity-logo-liquid-ready) !important;
+  }
+
+  .blur-reveal {
+    opacity: var(--opacity-content-visible) !important;
+    filter: none !important;
+    transform: none !important;
+  }
+
+  .text-highlight {
+    background-size: var(--background-size-text-highlight-visible) !important;
+    transition-delay: var(--motion-duration-instant) !important;
   }
 }
 

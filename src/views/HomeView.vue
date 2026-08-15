@@ -1,5 +1,7 @@
 <script setup>
+import BlurReveal from '../components/effects/BlurReveal.vue'
 import ParticlesBackground from '../components/effects/ParticlesBackground.vue'
+import TextHighlight from '../components/effects/TextHighlight.vue'
 import {
   about,
   contact,
@@ -98,7 +100,11 @@ function isExternalLink(href) {
 
       <div class="about-layout">
         <p class="about-layout__label">Professional direction and working approach</p>
-        <p class="about-layout__copy">{{ about.body }}</p>
+        <BlurReveal v-slot="{ entered }" class="about-layout__copy">
+          {{ about.bodyBefore }}<TextHighlight :active="entered">{{
+            about.bodyHighlight
+          }}</TextHighlight>{{ about.bodyAfter }}
+        </BlurReveal>
       </div>
     </section>
 

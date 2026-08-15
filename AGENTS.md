@@ -60,7 +60,7 @@ When the available evidence is incomplete, reduce or hide the content. Do not fi
 - Keep state local unless multiple distant components genuinely need shared state.
 - Use Vue Router only for routes that have been approved, such as project detail pages.
 - Tailwind CSS is approved. Map its theme to `src/styles/tokens.css`; do not use arbitrary utilities or default visual scales that bypass semantic tokens.
-- Use Inspira UI selectively through its copy-and-customise component model. The currently approved component is Particles Background for the homepage Hero. The `JET` navigation logo uses the owner-approved custom SVG mark. Do not add another Inspira component without a concrete product need.
+- Use Inspira UI selectively through its copy-and-customise component model. Approved adaptations are Particles Background for the homepage Hero, Text Highlight and a single-use Blur Reveal for the About Me copy, and Liquid Logo for the colour treatment inside the owner-approved `JET` SVG outline. Do not extend these effects or add another Inspira component without a concrete product need and owner approval.
 - Keep components focused and named by responsibility. Extract reusable primitives when repetition is proven, not in anticipation of it.
 - Use semantic HTML before adding JavaScript behaviour or ARIA.
 - After the project is scaffolded, record the exact install, development, test and build commands in `README.md`. Do not guess commands before they exist.
