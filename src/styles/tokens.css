@@ -25,6 +25,9 @@
 :root {
   color-scheme: dark;
 
+  /* Responsive behaviour */
+  --breakpoint-navigation-auto-hide-max: 47.999rem;
+
   /* Primitive colours */
   --colour-neutral-1000: #07090d;
   --colour-neutral-950: #090b10;
@@ -181,6 +184,8 @@
   --size-viewport-block-min: 100dvh;
   --size-navigation-min: 3.75rem;
   --size-navigation-logo-inline: 3.625rem;
+  --size-navigation-scroll-threshold: 12px;
+  --size-navigation-top-protection: 96px;
   --size-logo-layer: 100%;
   --size-control-block: 2.75rem;
   --size-control-block-large: 3rem;
@@ -211,7 +216,7 @@
   /* Liquid logo settings */
   --logo-liquid-dpr-max: 1.5;
   --logo-liquid-speed: 0.12;
-  --logo-liquid-pattern-scale: 0.5;
+  --logo-liquid-pattern-scale: 0.2;
   --logo-liquid-distortion: 0.03;
   --logo-liquid-highlight-width: 0.11;
   --logo-liquid-highlight-strength: 0.78;
@@ -222,7 +227,7 @@
   --border-width-focus: 2px;
   --border-style-default: solid;
   --radius-none: 0;
-  --radius-navigation-small: 0.5rem;
+  --radius-navigation-small: 0.2rem;
   --shadow-none: none;
   --shadow-navigation: 0 1.5rem 5rem rgb(0 0 0 / 34%);
   --filter-navigation-blur: 1.125rem;
@@ -274,7 +279,12 @@
   --motion-duration-text-highlight: var(--motion-duration-slow);
   --motion-delay-text-highlight: var(--motion-duration-standard);
   --motion-duration-logo-ready: var(--motion-duration-standard);
+  --motion-duration-navigation-visibility: var(--motion-duration-standard);
+  --motion-duration-navigation-programmatic-guard: 1200ms;
   --motion-easing-standard: cubic-bezier(0.16, 1, 0.3, 1);
+  --transform-navigation-hidden: translateY(
+    calc(-100% - var(--space-navigation-offset))
+  );
 }
 
 @media (min-width: 48rem) {
@@ -398,6 +408,15 @@ ol {
   z-index: var(--layer-navigation);
   margin-inline: auto;
   max-inline-size: var(--container-navigation-max);
+}
+
+.site-header[data-auto-hide="true"] {
+  transition: transform var(--motion-duration-navigation-visibility)
+    var(--motion-easing-standard);
+}
+
+.site-header[data-auto-hide="true"][data-visible="false"] {
+  transform: var(--transform-navigation-hidden);
 }
 
 .site-navigation {
