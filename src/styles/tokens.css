@@ -83,9 +83,6 @@
   --colour-logo-liquid-primary: var(--colour-blue-500);
   --colour-logo-liquid-secondary: var(--colour-teal-500);
   --colour-logo-liquid-tertiary: var(--colour-orange-500);
-  --colour-logo-liquid-highlight: var(--colour-neutral-50);
-  --colour-logo-liquid-shadow: var(--colour-neutral-1000);
-  --colour-logo-metal-shadow: var(--colour-neutral-700);
   --colour-highlight-start: var(--colour-blue-highlight);
   --colour-highlight-end: var(--colour-teal-highlight);
   --colour-particle-primary: var(--colour-blue-600);
@@ -170,14 +167,10 @@
   --layout-contact-links: 4fr;
 
   /* Brand mark */
-  --gradient-logo-metal-blue-start: 0%;
-  --gradient-logo-metal-teal-first: 16%;
-  --gradient-logo-metal-highlight-first: 30%;
-  --gradient-logo-metal-shadow: 44%;
-  --gradient-logo-metal-teal-second: 58%;
-  --gradient-logo-metal-orange: 72%;
-  --gradient-logo-metal-highlight-second: 86%;
-  --gradient-logo-metal-blue-end: 100%;
+  --gradient-logo-colour-primary-start: 0%;
+  --gradient-logo-colour-secondary: 33.333%;
+  --gradient-logo-colour-tertiary: 66.667%;
+  --gradient-logo-colour-primary-end: 100%;
   --aspect-ratio-logo-mark: 1460 / 557;
 
   /* Component sizing */
@@ -218,9 +211,6 @@
   --logo-liquid-speed: 0.12;
   --logo-liquid-pattern-scale: 0.2;
   --logo-liquid-distortion: 0.03;
-  --logo-liquid-highlight-width: 0.11;
-  --logo-liquid-highlight-strength: 0.78;
-  --logo-liquid-shadow-strength: 0.38;
 
   /* Borders, approved geometry and elevation */
   --border-width-thin: 1px;
@@ -277,7 +267,11 @@
   --motion-duration-slow: 520ms;
   --motion-duration-text-reveal: var(--motion-duration-slow);
   --motion-duration-text-highlight: var(--motion-duration-slow);
-  --motion-delay-text-highlight: var(--motion-duration-standard);
+  --motion-delay-text-highlight-first: var(--motion-duration-standard);
+  --motion-stagger-text-highlight: var(--motion-duration-standard);
+  --motion-delay-text-highlight-second: calc(
+    var(--motion-delay-text-highlight-first) + var(--motion-stagger-text-highlight)
+  );
   --motion-duration-logo-ready: var(--motion-duration-standard);
   --motion-duration-navigation-visibility: var(--motion-duration-standard);
   --motion-duration-navigation-programmatic-guard: 1200ms;
@@ -489,43 +483,23 @@ ol {
   opacity: var(--opacity-logo-liquid-ready);
 }
 
-.jet-logo__metal--blue-start {
-  offset: var(--gradient-logo-metal-blue-start);
+.jet-logo__colour--primary-start {
+  offset: var(--gradient-logo-colour-primary-start);
   stop-color: var(--colour-logo-liquid-primary);
 }
 
-.jet-logo__metal--teal-first {
-  offset: var(--gradient-logo-metal-teal-first);
+.jet-logo__colour--secondary {
+  offset: var(--gradient-logo-colour-secondary);
   stop-color: var(--colour-logo-liquid-secondary);
 }
 
-.jet-logo__metal--highlight-first {
-  offset: var(--gradient-logo-metal-highlight-first);
-  stop-color: var(--colour-logo-liquid-highlight);
-}
-
-.jet-logo__metal--shadow {
-  offset: var(--gradient-logo-metal-shadow);
-  stop-color: var(--colour-logo-metal-shadow);
-}
-
-.jet-logo__metal--teal-second {
-  offset: var(--gradient-logo-metal-teal-second);
-  stop-color: var(--colour-logo-liquid-secondary);
-}
-
-.jet-logo__metal--orange {
-  offset: var(--gradient-logo-metal-orange);
+.jet-logo__colour--tertiary {
+  offset: var(--gradient-logo-colour-tertiary);
   stop-color: var(--colour-logo-liquid-tertiary);
 }
 
-.jet-logo__metal--highlight-second {
-  offset: var(--gradient-logo-metal-highlight-second);
-  stop-color: var(--colour-logo-liquid-highlight);
-}
-
-.jet-logo__metal--blue-end {
-  offset: var(--gradient-logo-metal-blue-end);
+.jet-logo__colour--primary-end {
+  offset: var(--gradient-logo-colour-primary-end);
   stop-color: var(--colour-logo-liquid-primary);
 }
 
@@ -1028,11 +1002,15 @@ ol {
   background-size: var(--background-size-text-highlight-hidden);
   color: var(--colour-text-primary);
   transition: background-size var(--motion-duration-text-highlight)
-    var(--motion-easing-standard) var(--motion-delay-text-highlight);
+    var(--motion-easing-standard) var(--motion-delay-text-highlight-first);
 }
 
 .text-highlight[data-active="true"] {
   background-size: var(--background-size-text-highlight-visible);
+}
+
+.text-highlight[data-sequence="second"] {
+  transition-delay: var(--motion-delay-text-highlight-second);
 }
 
 .about-layout__copy strong {
@@ -1277,6 +1255,7 @@ ol {
 
   .text-highlight {
     background-size: var(--background-size-text-highlight-visible) !important;
+    transition-duration: var(--motion-duration-instant) !important;
     transition-delay: var(--motion-duration-instant) !important;
   }
 }

@@ -16,15 +16,10 @@ const TOKEN_NAMES = Object.freeze({
   primary: '--colour-logo-liquid-primary',
   secondary: '--colour-logo-liquid-secondary',
   tertiary: '--colour-logo-liquid-tertiary',
-  highlight: '--colour-logo-liquid-highlight',
-  shadow: '--colour-logo-liquid-shadow',
   dprMax: '--logo-liquid-dpr-max',
   speed: '--logo-liquid-speed',
   patternScale: '--logo-liquid-pattern-scale',
   distortion: '--logo-liquid-distortion',
-  highlightWidth: '--logo-liquid-highlight-width',
-  highlightStrength: '--logo-liquid-highlight-strength',
-  shadowStrength: '--logo-liquid-shadow-strength',
   readyOpacity: '--opacity-logo-liquid-ready',
 })
 
@@ -107,23 +102,16 @@ function readRendererConfiguration() {
   const primary = readCssColour(styles, TOKEN_NAMES.primary)
   const secondary = readCssColour(styles, TOKEN_NAMES.secondary)
   const tertiary = readCssColour(styles, TOKEN_NAMES.tertiary)
-  const highlight = readCssColour(styles, TOKEN_NAMES.highlight)
-  const shadow = readCssColour(styles, TOKEN_NAMES.shadow)
   const dprMax = readFiniteNumber(styles, TOKEN_NAMES.dprMax)
   const speed = readFiniteNumber(styles, TOKEN_NAMES.speed)
   const patternScale = readFiniteNumber(styles, TOKEN_NAMES.patternScale)
   const distortion = readFiniteNumber(styles, TOKEN_NAMES.distortion)
-  const highlightWidth = readFiniteNumber(styles, TOKEN_NAMES.highlightWidth)
-  const highlightStrength = readFiniteNumber(styles, TOKEN_NAMES.highlightStrength)
-  const shadowStrength = readFiniteNumber(styles, TOKEN_NAMES.shadowStrength)
   const readyOpacity = readFiniteNumber(styles, TOKEN_NAMES.readyOpacity)
 
   if (
     !primary ||
     !secondary ||
     !tertiary ||
-    !highlight ||
-    !shadow ||
     dprMax === null ||
     dprMax <= 0 ||
     speed === null ||
@@ -132,15 +120,6 @@ function readRendererConfiguration() {
     patternScale <= 0 ||
     distortion === null ||
     distortion < 0 ||
-    highlightWidth === null ||
-    highlightWidth <= 0 ||
-    highlightWidth > 1 ||
-    highlightStrength === null ||
-    highlightStrength < 0 ||
-    highlightStrength > 1 ||
-    shadowStrength === null ||
-    shadowStrength < 0 ||
-    shadowStrength > 1 ||
     readyOpacity === null ||
     readyOpacity <= 0 ||
     readyOpacity > 1
@@ -152,15 +131,10 @@ function readRendererConfiguration() {
     primary,
     secondary,
     tertiary,
-    highlight,
-    shadow,
     dprMax,
     speed,
     patternScale,
     distortion,
-    highlightWidth,
-    highlightStrength,
-    shadowStrength,
   }
 }
 
@@ -186,14 +160,9 @@ function collectUniforms(context, shaderProgram) {
     'u_speed',
     'u_pattern_scale',
     'u_distortion',
-    'u_highlight_width',
-    'u_highlight_strength',
-    'u_shadow_strength',
     'u_primary',
     'u_secondary',
     'u_tertiary',
-    'u_highlight',
-    'u_shadow',
   ]
   const locations = {}
 
@@ -212,14 +181,9 @@ function applyRendererConfiguration() {
   gl.uniform1f(uniforms.u_speed, rendererConfiguration.speed)
   gl.uniform1f(uniforms.u_pattern_scale, rendererConfiguration.patternScale)
   gl.uniform1f(uniforms.u_distortion, rendererConfiguration.distortion)
-  gl.uniform1f(uniforms.u_highlight_width, rendererConfiguration.highlightWidth)
-  gl.uniform1f(uniforms.u_highlight_strength, rendererConfiguration.highlightStrength)
-  gl.uniform1f(uniforms.u_shadow_strength, rendererConfiguration.shadowStrength)
   gl.uniform3fv(uniforms.u_primary, rendererConfiguration.primary)
   gl.uniform3fv(uniforms.u_secondary, rendererConfiguration.secondary)
   gl.uniform3fv(uniforms.u_tertiary, rendererConfiguration.tertiary)
-  gl.uniform3fv(uniforms.u_highlight, rendererConfiguration.highlight)
-  gl.uniform3fv(uniforms.u_shadow, rendererConfiguration.shadow)
 
   return true
 }
@@ -645,14 +609,10 @@ onBeforeUnmount(() => {
           :x2="JET_LOGO_VIEWBOX_WIDTH"
           y2="0"
         >
-          <stop class="jet-logo__metal--blue-start" />
-          <stop class="jet-logo__metal--teal-first" />
-          <stop class="jet-logo__metal--highlight-first" />
-          <stop class="jet-logo__metal--shadow" />
-          <stop class="jet-logo__metal--teal-second" />
-          <stop class="jet-logo__metal--orange" />
-          <stop class="jet-logo__metal--highlight-second" />
-          <stop class="jet-logo__metal--blue-end" />
+          <stop class="jet-logo__colour--primary-start" />
+          <stop class="jet-logo__colour--secondary" />
+          <stop class="jet-logo__colour--tertiary" />
+          <stop class="jet-logo__colour--primary-end" />
         </linearGradient>
       </defs>
 

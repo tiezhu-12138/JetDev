@@ -101,9 +101,15 @@ function isExternalLink(href) {
       <div class="about-layout">
         <p class="about-layout__label">Professional direction and working approach</p>
         <BlurReveal v-slot="{ entered }" class="about-layout__copy">
-          {{ about.bodyBefore }}<TextHighlight :active="entered">{{
-            about.bodyHighlight
-          }}</TextHighlight>{{ about.bodyAfter }}
+          {{ about.bodyBeforeQualification
+          }}<TextHighlight :active="entered" sequence="first">{{
+            about.qualificationHighlight
+          }}</TextHighlight
+          >{{ about.bodyBetweenHighlights
+          }}<TextHighlight :active="entered" sequence="second">{{
+            about.workingApproachHighlight
+          }}</TextHighlight
+          >{{ about.bodyAfter }}
         </BlurReveal>
       </div>
     </section>

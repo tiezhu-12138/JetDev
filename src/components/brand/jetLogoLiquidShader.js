@@ -25,14 +25,9 @@ uniform float u_time;
 uniform float u_speed;
 uniform float u_pattern_scale;
 uniform float u_distortion;
-uniform float u_highlight_width;
-uniform float u_highlight_strength;
-uniform float u_shadow_strength;
 uniform vec3 u_primary;
 uniform vec3 u_secondary;
 uniform vec3 u_tertiary;
-uniform vec3 u_highlight;
-uniform vec3 u_shadow;
 
 const float TAU = 6.283185307179586;
 const float PHI = 1.618033988749895;
@@ -70,21 +65,6 @@ void main() {
   );
 
   vec3 colour = brand_gradient(phase);
-
-  float highlight_distance = abs(sin(TAU * (phase + liquid * u_distortion)));
-  float highlight_mix = (
-    1.0 - smoothstep(0.0, u_highlight_width, highlight_distance)
-  ) * u_highlight_strength;
-
-  float shadow_distance = abs(
-    sin(TAU * (phase + HALF - liquid * u_distortion))
-  );
-  float shadow_mix = (
-    1.0 - smoothstep(0.0, u_highlight_width, shadow_distance)
-  ) * u_shadow_strength;
-
-  colour = mix(colour, u_shadow, shadow_mix);
-  colour = mix(colour, u_highlight, highlight_mix);
 
   fragment_colour = vec4(colour, mask_alpha);
 }

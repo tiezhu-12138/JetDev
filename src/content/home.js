@@ -131,12 +131,15 @@ export const projects = [
 
 export const about = {
   heading: 'About Me',
-  bodyBefore:
-    'I am a Melbourne-based full-stack software engineer with a Master of Information Technology from Monash University. During internships at Robotic Marketer and Hangzhou Youzan, I worked across web application development, data workflows, responsive interfaces, automated testing and cloud delivery. My recent experience includes Python, Django, MongoDB, PostgreSQL and JavaScript, with Vue.js and FastAPI used to build a digital-citizenship platform for content creators. I enjoy turning complex business workflows into ',
-  bodyHighlight:
-    'maintainable services, clear data models and accessible user experiences',
+  bodyBeforeQualification:
+    'I am a Melbourne-based full-stack software engineer with a ',
+  qualificationHighlight: 'Master of Information Technology from Monash University.',
+  bodyBetweenHighlights:
+    ' During internships at Robotic Marketer and Hangzhou Youzan, I worked across web application development, data workflows, responsive interfaces, automated testing and cloud delivery. My recent experience includes Python, Django, MongoDB, PostgreSQL and JavaScript, with Vue.js and FastAPI used to build a digital-citizenship platform for content creators. I enjoy turning complex business workflows into ',
+  workingApproachHighlight:
+    'maintainable services, clear data models and accessible user experiences.',
   bodyAfter:
-    '. I am currently seeking Graduate and Junior Software Development opportunities where I can contribute across frontend and backend work, learn from experienced engineers and continue building practical, reliable software.',
+    ' I am currently seeking Graduate and Junior Software Development opportunities where I can contribute across frontend and backend work, learn from experienced engineers and continue building practical, reliable software.',
 }
 
 export const skillGroups = [
