@@ -179,6 +179,8 @@
   --space-content-gap: clamp(1.5rem, 4vw, 3.5rem);
   --space-card-padding: clamp(1.5rem, 4vw, 3.5rem);
   --space-card-gap: clamp(1.5rem, 3vw, 2.5rem);
+  --space-project-gallery-padding: clamp(0.65rem, 1.95vw, 1.3rem);
+  --space-project-gallery-gap: clamp(0.975rem, 2.925vw, 1.95rem);
   --space-list-gap: var(--space-4);
   --space-highlight-inline: var(--space-1);
   --space-anchor-offset: 7rem;
@@ -219,14 +221,20 @@
   --size-focus-offset: 0.1875rem;
   --size-section-rule: 4rem;
   --size-project-number: clamp(3rem, 7vw, 6rem);
+  --size-project-gallery-block: clamp(14.3rem, 53.3vw, 20.8rem);
+  --size-project-gallery-fallback-inline: min(53.3vw, 33.8rem);
   --size-text-reveal-offset: var(--space-2);
   --size-particle-canvas: 100%;
+  --size-visually-hidden: 1px;
+  --position-visually-hidden: -1px;
+  --size-focus-offset-inset: -0.1875rem;
   --aspect-ratio-project: 16 / 10;
   --opacity-muted: 0.72;
   --opacity-grid: 0.42;
   --opacity-particle-layer: 0.58;
   --opacity-content-hidden: 0;
   --opacity-content-visible: 1;
+  --opacity-gallery-alpha-cutoff: 0.01;
   --opacity-logo-liquid-hidden: 0;
   --opacity-logo-liquid-ready: 1;
 
@@ -246,12 +254,36 @@
   --logo-liquid-pattern-scale: 0.2;
   --logo-liquid-distortion: 0.03;
 
+  /* Bending gallery settings */
+  --gallery-bend-depth: 3;
+  --gallery-camera-depth: 20;
+  --gallery-camera-fov: 45;
+  --gallery-drag-ratio: 1;
+  --gallery-gap-pixels: 27.3;
+  --gallery-item-height-factor: 0.64;
+  --gallery-item-width-factor: 0.585;
+  --gallery-preload-root-margin: 75% 0px;
+  --gallery-render-dpr-max: 1.5;
+  --gallery-scroll-ease: 0.08;
+  --gallery-segment-count-block: 24;
+  --gallery-segment-count-inline: 48;
+  --gallery-settle-threshold: 0.0005;
+  --gallery-velocity-limit: 0.45;
+  --gallery-wave-amplitude: 0.08;
+  --gallery-wave-frequency-x: 2;
+  --gallery-wave-frequency-y: 1.5;
+  --gallery-wave-velocity-scale: 3;
+  --gallery-wheel-line-pixels: 16;
+  --gallery-wheel-ratio: 0.02;
+
   /* Borders, approved geometry and elevation */
   --border-width-thin: 1px;
   --border-width-focus: 2px;
   --border-style-default: solid;
   --radius-none: 0;
   --radius-navigation-small: 0.2rem;
+  /* Owner-approved rounded exception for imagery inside the Safari mockups only. */
+  --radius-browser-mockup: 0.75rem;
   --shadow-none: none;
   --shadow-navigation: 0 1.5rem 5rem rgb(0 0 0 / 34%);
   --shadow-theme-menu: 0 1rem 3rem rgb(0 0 0 / 38%);
@@ -311,6 +343,10 @@
   --motion-duration-logo-ready: var(--motion-duration-standard);
   --motion-duration-navigation-visibility: var(--motion-duration-standard);
   --motion-duration-navigation-programmatic-guard: 1200ms;
+  --motion-duration-gallery-autoplay-frame-cap: 64ms;
+  --motion-duration-gallery-autoplay-item: 12s;
+  --motion-duration-gallery-autoplay-resume-delay: 3s;
+  --motion-duration-gallery-snap-delay: 180ms;
   --motion-easing-standard: cubic-bezier(0.16, 1, 0.3, 1);
   --transform-navigation-hidden: translateY(
     calc(-100% - var(--space-navigation-offset))
@@ -357,6 +393,12 @@
 @media (min-width: 48rem) {
   :root {
     --particle-quantity: 52;
+    --space-project-gallery-padding: clamp(0.5rem, 1.5vw, 1rem);
+    --space-project-gallery-gap: 30px;
+    --size-project-gallery-block: clamp(14rem, 28vw, 20rem);
+    --size-project-gallery-fallback-inline: min(41vw, 26rem);
+    --gallery-gap-pixels: 30;
+    --gallery-item-width-factor: 0.45;
   }
 }
 
@@ -371,6 +413,19 @@
 *::before,
 *::after {
   box-sizing: border-box;
+}
+
+.visually-hidden {
+  position: absolute;
+  inline-size: var(--size-visually-hidden);
+  block-size: var(--size-visually-hidden);
+  padding: var(--space-0);
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  margin: var(--position-visually-hidden);
+  border: var(--space-0);
+  white-space: nowrap;
 }
 
 html {
@@ -1019,6 +1074,80 @@ ol {
 .projects-grid {
   display: grid;
   gap: var(--space-card-gap);
+}
+
+.project-gallery {
+  position: relative;
+  grid-column: 1 / -1;
+  min-inline-size: var(--space-0);
+  block-size: var(--size-project-gallery-block);
+  overflow: hidden;
+  border: var(--border-width-thin) var(--border-style-default)
+    var(--colour-border-default);
+  border-radius: var(--radius-none);
+  background: var(--colour-surface-page-deep);
+  isolation: isolate;
+}
+
+.project-gallery__enhancement,
+.project-gallery__canvas-host {
+  position: absolute;
+  inset: var(--space-0);
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.project-gallery__enhancement[data-state="checking"] {
+  visibility: hidden;
+}
+
+.project-gallery__enhancement[data-state="fallback"] {
+  display: none;
+}
+
+.project-gallery__enhancement[data-state="enhanced"] {
+  cursor: grab;
+  touch-action: pan-y;
+}
+
+.project-gallery__enhancement[data-dragging="true"] {
+  cursor: grabbing;
+}
+
+.project-gallery__enhancement:focus-visible,
+.project-gallery__fallback:focus-visible {
+  outline-offset: var(--size-focus-offset-inset);
+}
+
+.project-gallery__canvas {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  pointer-events: none;
+}
+
+.project-gallery__fallback {
+  display: flex;
+  align-items: center;
+  gap: var(--space-project-gallery-gap);
+  block-size: 100%;
+  padding: var(--space-project-gallery-padding);
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-inline: contain;
+  scroll-snap-type: inline proximity;
+}
+
+.project-gallery__fallback-item {
+  flex: 0 0 var(--size-project-gallery-fallback-inline);
+  scroll-snap-align: center;
+}
+
+.project-gallery__fallback img {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  border-radius: var(--radius-browser-mockup);
 }
 
 .project-feature {

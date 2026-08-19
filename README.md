@@ -13,3 +13,4 @@ The interface uses responsive light and dark themes, defaults to the visitor's s
 - Vite
 - Tailwind CSS 4
 - VueUse
+- OGL
