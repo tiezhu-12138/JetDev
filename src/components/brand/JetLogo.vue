@@ -46,6 +46,7 @@ let motionPreference = null
 let program = null
 let rendererConfiguration = null
 let resizeObserver = null
+let themeObserver = null
 let uniforms = null
 let vertexBuffer = null
 let vertexShader = null
@@ -564,6 +565,14 @@ onMounted(() => {
     resizeObserver.observe(root)
   }
 
+  if (typeof MutationObserver === 'function') {
+    themeObserver = new MutationObserver(handleResize)
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme'],
+    })
+  }
+
   initialiseRenderer()
 })
 
@@ -581,6 +590,8 @@ onBeforeUnmount(() => {
 
   resizeObserver?.disconnect()
   resizeObserver = null
+  themeObserver?.disconnect()
+  themeObserver = null
 
   releaseRendererResources()
 })

@@ -1,15 +1,32 @@
 <script setup>
 import {
+  useColorMode,
   useMediaQuery,
   usePreferredReducedMotion,
+  useStorage,
   useWindowScroll,
 } from '@vueuse/core'
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
 import { externalLinks, navigationItems } from '../../content/home.js'
 import JetLogo from '../brand/JetLogo.vue'
+import ColourThemeMenu from './ColourThemeMenu.vue'
 
 const menuId = 'primary-navigation-menu'
+const colourThemeValues = new Set(['auto', 'light', 'dark'])
+const colourThemeStorageKey =
+  document.documentElement.dataset.themeStorageKey || null
+const storedThemePreference = colourThemeStorageKey
+  ? useStorage(colourThemeStorageKey, 'auto', undefined, {
+      onError: () => {},
+    })
+  : ref('auto')
+const colourMode = useColorMode({
+  attribute: 'data-theme',
+  disableTransition: true,
+  initialValue: 'auto',
+  storageRef: storedThemePreference,
+})
 const isMenuOpen = ref(false)
 const isHeaderVisible = ref(true)
 const isHeaderFocusProtected = ref(false)
@@ -20,6 +37,16 @@ const menuToggle = ref(null)
 const isAutoHideViewport = useMediaQuery(autoHideMediaQuery)
 const reducedMotion = usePreferredReducedMotion()
 const { y: scrollY } = useWindowScroll()
+
+const themePreference = computed({
+  get: () =>
+    colourThemeValues.has(colourMode.store.value)
+      ? colourMode.store.value
+      : 'auto',
+  set: (value) => {
+    colourMode.store.value = colourThemeValues.has(value) ? value : 'auto'
+  },
+})
 
 const isAutoHideEnabled = computed(
   () =>
@@ -267,6 +294,16 @@ onBeforeUnmount(() => {
 
 watch(scrollY, handleScroll)
 
+watch(
+  colourMode.store,
+  (value) => {
+    if (!colourThemeValues.has(value)) {
+      colourMode.store.value = 'auto'
+    }
+  },
+  { immediate: true },
+)
+
 watch([isAutoHideEnabled, isMenuOpen, isHeaderFocusProtected], () => {
   showHeader()
   resetScrollTracking()
@@ -305,6 +342,11 @@ watch([isAutoHideEnabled, isMenuOpen, isHeaderFocusProtected], () => {
       </ul>
 
       <div class="site-navigation__actions">
+        <ColourThemeMenu
+          v-model="themePreference"
+          class="colour-theme-menu--desktop"
+        />
+
         <a
           v-if="externalLinks.resume"
           class="site-navigation__resume"
@@ -345,6 +387,12 @@ watch([isAutoHideEnabled, isMenuOpen, isHeaderFocusProtected], () => {
             </a>
           </li>
         </ul>
+
+        <ColourThemeMenu
+          v-if="isMenuOpen"
+          v-model="themePreference"
+          class="colour-theme-menu--mobile"
+        />
       </div>
     </nav>
   </header>

@@ -1,4 +1,5 @@
 <script setup>
+import BendingGallery from '../components/effects/BendingGallery.vue'
 import BlurReveal from '../components/effects/BlurReveal.vue'
 import ParticlesBackground from '../components/effects/ParticlesBackground.vue'
 import TextHighlight from '../components/effects/TextHighlight.vue'
@@ -12,6 +13,7 @@ import {
   projects,
   skillGroups,
 } from '../content/home.js'
+import { projectGalleryItems } from '../content/projectGallery.js'
 
 const projectVariants = ['primary', 'secondary', 'tertiary']
 
@@ -126,40 +128,44 @@ function isExternalLink(href) {
       </header>
 
       <div class="projects-grid">
-        <article
-          v-for="(project, index) in projects"
-          :key="project.id"
-          :class="['project-feature', `project-feature--${projectVariants[index]}`]"
-        >
-          <header class="project-feature__header">
-            <div class="project-feature__meta">
-              <span>{{ project.context }}</span>
-              <span>{{ projectNumber(index) }}</span>
-            </div>
-            <p class="project-feature__number" aria-hidden="true">{{ projectNumber(index) }}</p>
-            <h3>{{ project.title }}</h3>
-            <p class="project-feature__summary">{{ project.summary }}</p>
-            <ul class="project-feature__stack" :aria-label="project.technologyLabel">
-              <li v-for="technology in project.technologies" :key="technology">
-                {{ technology }}
-              </li>
-            </ul>
-            <p v-if="project.scopeNote" class="project-feature__scope">
-              {{ project.scopeNote }}
-            </p>
-          </header>
+        <template v-for="(project, index) in projects" :key="project.id">
+          <article :class="['project-feature', `project-feature--${projectVariants[index]}`]">
+            <header class="project-feature__header">
+              <div class="project-feature__meta">
+                <span>{{ project.context }}</span>
+                <span>{{ projectNumber(index) }}</span>
+              </div>
+              <p class="project-feature__number" aria-hidden="true">{{ projectNumber(index) }}</p>
+              <h3>{{ project.title }}</h3>
+              <p class="project-feature__summary">{{ project.summary }}</p>
+              <ul class="project-feature__stack" :aria-label="project.technologyLabel">
+                <li v-for="technology in project.technologies" :key="technology">
+                  {{ technology }}
+                </li>
+              </ul>
+              <p v-if="project.scopeNote" class="project-feature__scope">
+                {{ project.scopeNote }}
+              </p>
+            </header>
 
-          <dl class="project-feature__details">
-            <div
-              v-for="step in caseStudySteps"
-              :key="step.key"
-              class="project-feature__detail"
-            >
-              <dt>{{ step.label }}</dt>
-              <dd>{{ project.caseStudy[step.key] }}</dd>
-            </div>
-          </dl>
-        </article>
+            <dl class="project-feature__details">
+              <div
+                v-for="step in caseStudySteps"
+                :key="step.key"
+                class="project-feature__detail"
+              >
+                <dt>{{ step.label }}</dt>
+                <dd>{{ project.caseStudy[step.key] }}</dd>
+              </div>
+            </dl>
+          </article>
+
+          <BendingGallery
+            v-if="index === 0"
+            :items="projectGalleryItems"
+            label="Project screenshot gallery"
+          />
+        </template>
       </div>
     </section>
 
