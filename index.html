@@ -1,8 +1,35 @@
 <!doctype html>
-<html lang="en-AU">
+<html lang="en-AU" data-theme-storage-key="jetdev-colour-theme">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      ;(() => {
+        const root = document.documentElement
+        const storageKey = root.dataset.themeStorageKey
+        const supportedThemes = ['auto', 'light', 'dark']
+        let preference = 'auto'
+
+        try {
+          const storedTheme = window.localStorage.getItem(storageKey)
+
+          if (supportedThemes.includes(storedTheme)) {
+            preference = storedTheme
+          } else if (storedTheme !== null) {
+            window.localStorage.removeItem(storageKey)
+          }
+        } catch {
+          preference = 'auto'
+        }
+
+        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
+          .matches
+          ? 'dark'
+          : 'light'
+
+        root.dataset.theme = preference === 'auto' ? systemTheme : preference
+      })()
+    </script>
     <meta
       name="description"
       content="Jiahang “Jet” Sun is a Melbourne-based full-stack software engineer working across data, services and responsive interfaces."

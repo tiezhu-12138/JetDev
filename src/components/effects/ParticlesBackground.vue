@@ -20,6 +20,7 @@ let particleTokens;
 let animationFrame;
 let resizeFrame;
 let resizeObserver;
+let themeObserver;
 let intersectionObserver;
 let motionPreference;
 let stopPixelRatioWatch;
@@ -294,6 +295,12 @@ onMounted(async () => {
   resizeObserver = new ResizeObserver(scheduleResize);
   resizeObserver.observe(canvasContainer.value);
 
+  themeObserver = new MutationObserver(scheduleResize);
+  themeObserver.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["data-theme"],
+  });
+
   intersectionObserver = new IntersectionObserver(([entry]) => {
     isInViewport = entry?.isIntersecting ?? false;
     syncAnimation();
@@ -312,6 +319,7 @@ onBeforeUnmount(() => {
   }
 
   resizeObserver?.disconnect();
+  themeObserver?.disconnect();
   intersectionObserver?.disconnect();
   stopPixelRatioWatch?.();
   motionPreference?.removeEventListener("change", handleMotionPreferenceChange);
