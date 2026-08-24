@@ -6,10 +6,10 @@ import TextHighlight from '../components/effects/TextHighlight.vue'
 import {
   about,
   contact,
-  currently,
   education,
   experience,
   hero,
+  profileSnapshot,
   projects,
   skillGroups,
 } from '../content/home.js'
@@ -72,9 +72,9 @@ function isExternalLink(href) {
           </div>
         </div>
 
-        <aside class="hero__status" aria-label="Current availability">
-          <p class="hero__status-label">{{ currently.label }}</p>
-          <p class="hero__status-copy">{{ currently.text }}</p>
+        <aside class="hero__status" aria-label="Professional profile">
+          <p class="hero__status-label">{{ profileSnapshot.label }}</p>
+          <p class="hero__status-copy">{{ profileSnapshot.text }}</p>
           <dl class="hero__facts">
             <div class="hero__fact">
               <dt>Location</dt>
@@ -82,7 +82,7 @@ function isExternalLink(href) {
             </div>
             <div class="hero__fact">
               <dt>Focus</dt>
-              <dd>Data, services and interfaces</dd>
+              <dd>Interfaces, services and cloud delivery</dd>
             </div>
           </dl>
         </aside>
@@ -176,7 +176,7 @@ function isExternalLink(href) {
           <h2 id="skills-title">Technical Skills</h2>
         </div>
         <p class="section-heading__intro">
-          Technologies used across internship and course work, grouped by practical area.
+          Technologies used across professional experience and project work, grouped by practical area.
         </p>
       </header>
 

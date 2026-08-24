@@ -13,9 +13,9 @@ export const navigationItems = [
   { label: 'Contact', href: '/#contact' },
 ]
 
-export const currently = {
-  label: 'Currently',
-  text: 'Open to Graduate and Junior Software Development opportunities',
+export const profileSnapshot = {
+  label: 'Profile',
+  text: '1 year of experience delivering end-to-end features for AI-powered PaaS products',
 }
 
 export const hero = {
@@ -23,7 +23,7 @@ export const hero = {
   title: 'Full-stack Software Engineer',
   location: 'Melbourne, Australia',
   introduction:
-    'Building maintainable web applications with practical full-stack engineering, responsive interfaces and reliable data workflows.',
+    'Delivering responsive interfaces, reusable back-end services, data workflows and cloud releases for AI-powered products.',
   primaryAction: {
     label: 'View Projects',
     href: '/#projects',
@@ -39,10 +39,10 @@ export const hero = {
   ],
 }
 
-const combinedInternshipEvidence = {
+const combinedRoboticMarketerEvidence = {
   scopeNote:
-    'The resume records these contributions across Campaign Centre and CRM together. They are not attributed to either module alone.',
-  technologyLabel: 'Combined internship stack',
+    'These contributions span Campaign Centre and CRM and are not attributed to either module alone.',
+  technologyLabel: 'Combined Robotic Marketer stack',
   technologies: [
     'Python',
     'Django',
@@ -59,17 +59,17 @@ export const projects = [
     id: 'campaign-centre',
     slug: 'campaign-centre',
     title: 'Campaign Centre',
-    context: 'Robotic Marketer internship',
+    context: 'Robotic Marketer experience',
     summary:
       'A campaign operations module supporting planning, analytics and cloud-based delivery within an AI-powered marketing platform.',
-    ...combinedInternshipEvidence,
+    ...combinedRoboticMarketerEvidence,
     caseStudy: {
       problem:
         'Support campaign planning, analytics and cloud-based delivery within an AI-powered marketing platform.',
       role:
-        'Contributed to full-stack delivery across Campaign Centre and CRM as a Software Engineer Intern.',
+        'Contributed to full-stack delivery across Campaign Centre and CRM as a Software Engineer.',
       approach:
-        'Across the combined internship scope, designed MongoDB document structures and reusable business logic, then developed analytics dashboards and scheduled Celery workflows.',
+        'Across the combined Robotic Marketer scope, designed MongoDB document structures and reusable business logic, then developed analytics dashboards and scheduled Celery workflows.',
       challenges:
         'Worked with complex lifecycle, financial and performance workflows, including budget variance, ROI, ROAS, readiness and engagement scoring.',
       result:
@@ -80,10 +80,10 @@ export const projects = [
     id: 'crm-platform',
     slug: 'crm-platform',
     title: 'CRM Platform',
-    context: 'Robotic Marketer internship',
+    context: 'Robotic Marketer experience',
     summary:
       'A connected CRM module supporting customer and sales workflows within an AI-powered marketing platform.',
-    ...combinedInternshipEvidence,
+    ...combinedRoboticMarketerEvidence,
     caseStudy: {
       problem:
         'Support customer and sales workflows while maintaining dependable validation and access isolation.',
@@ -94,7 +94,7 @@ export const projects = [
       challenges:
         'Supported three input formats and four output formats while preserving validation, access isolation and rollback handling.',
       result:
-        'Delivered reusable import and export workflows as part of the combined internship scope.',
+        'Delivered reusable import and export workflows as part of the combined Robotic Marketer scope.',
     },
   },
   {
@@ -132,50 +132,65 @@ export const projects = [
 export const about = {
   heading: 'About Me',
   bodyBeforeQualification:
-    'I am a Melbourne-based full-stack software engineer with a ',
+    'I am a Melbourne-based full-stack software engineer with one year of experience. I hold a ',
   qualificationHighlight: 'Master of Information Technology from Monash University.',
   bodyBetweenHighlights:
-    ' During internships at Robotic Marketer and Hangzhou Youzan, I worked across web application development, data workflows, responsive interfaces, automated testing and cloud delivery. My recent experience includes Python, Django, MongoDB, PostgreSQL and JavaScript, with Vue.js and FastAPI used to build a digital-citizenship platform for content creators. I enjoy turning complex business workflows into ',
+    ' My experience covers end-to-end features across responsive interfaces, reusable back-end services, data workflows and cloud releases. At Robotic Marketer, I developed full-stack capabilities for an AI-powered marketing platform. At Hangzhou Youzan, I built RESTful back-end services and finance data workflows. My toolkit includes TypeScript, JavaScript, React, Python, Django, FastAPI, MongoDB and PostgreSQL. I use AI agents across planning, implementation, testing and review, while grounding delivery in automated tests, validation and clear technical documentation. I enjoy turning complex business workflows into ',
   workingApproachHighlight:
     'maintainable services, clear data models and accessible user experiences.',
   bodyAfter:
-    ' I am currently seeking Graduate and Junior Software Development opportunities where I can contribute across frontend and backend work, learn from experienced engineers and continue building practical, reliable software.',
+    ' My focus is practical full-stack work across frontend, backend and data.',
 }
 
 export const skillGroups = [
   {
-    name: 'Frontend',
+    name: 'Languages',
+    skills: ['Python', 'JavaScript', 'Java', 'SQL', 'R'],
+  },
+  {
+    name: 'Back end',
+    skills: ['Django', 'FastAPI', 'Flask', 'REST APIs', 'Celery'],
+  },
+  {
+    name: 'Front end',
     skills: [
+      'TypeScript',
       'Vue.js',
       'React',
-      'JavaScript',
       'HTML5',
       'CSS3',
+      'Tailwind',
       'Bootstrap',
       'Responsive UI',
-      'WCAG accessibility',
+      'Accessibility and WCAG',
     ],
   },
   {
-    name: 'Backend',
-    skills: ['Python', 'Django', 'FastAPI', 'REST APIs', 'Celery', 'Service-layer design'],
+    name: 'Data',
+    skills: ['MongoDB', 'MongoEngine', 'PostgreSQL', 'Pandas', 'Microsoft Access'],
   },
   {
-    name: 'Database',
-    skills: ['MongoDB', 'MongoEngine', 'PostgreSQL', 'SQL'],
-  },
-  {
-    name: 'Tools',
+    name: 'Cloud and DevOps',
     skills: [
-      'Git',
-      'GitHub Actions',
       'AWS EC2',
       'AWS IAM',
       'AWS CodeCommit',
-      'SSH',
-      'Vercel',
-      'Railway',
+      'Git',
+      'GitHub Actions',
       'Cloudflare',
+      'SSH',
+    ],
+  },
+  {
+    name: 'Practices',
+    skills: [
+      'Full-stack development',
+      'Agent-assisted development',
+      'Data modelling',
+      'CI/CD',
+      'Automated testing',
+      'Agile delivery',
+      'Technical documentation',
     ],
   },
 ]
@@ -183,29 +198,30 @@ export const skillGroups = [
 export const experience = [
   {
     organisation: 'Robotic Marketer',
-    role: 'Software Engineer Intern',
+    role: 'Software Engineer',
     location: 'Melbourne, Australia',
     period: 'May to August 2026',
     summary:
-      'Contributed full-stack features across the Campaign Centre and CRM modules of an AI-powered marketing platform.',
+      'Developed full-stack capabilities for an AI-powered marketing platform, covering data, interfaces and cloud delivery.',
     highlights: [
-      'Engineered full-stack features with Python, Django, MongoEngine and JavaScript across Campaign Centre and CRM.',
-      'Designed MongoDB document structures and reusable business logic for lifecycle, financial and performance workflows.',
-      'Built reusable data import and export infrastructure, analytics dashboards and scheduled Celery data workflows.',
-      'Tested responsive interfaces and supported daily AWS EC2 deployments through SSH and AWS CodeCommit.',
+      'Built and shipped end-to-end features with TypeScript and JavaScript, using AI agents across planning, implementation, testing and review.',
+      'Developed responsive TypeScript and JavaScript interfaces backed by Django services, and maintained Python and Django unit tests.',
+      'Designed reusable MongoDB models and service logic, with validation, duplicate detection and rollback controls protecting data integrity and recovery.',
+      'Automated analytics and reporting with Celery, and delivered repeatable releases through Git, AWS CodeCommit, AWS EC2, SSH and IAM-controlled access.',
     ],
   },
   {
     organisation: 'Hangzhou Youzan Technology Co., Ltd',
-    role: 'Python Developer Intern',
+    role: 'Python Developer',
     location: 'Hangzhou, China',
-    period: 'June to August 2021',
+    period: 'June 2021 to June 2022',
     summary:
-      'Worked on internal finance data automation and reporting workflows for funding and account operations.',
+      'Developed RESTful back-end services and automated finance data workflows for affiliated-company funding, account operations and reporting.',
     highlights: [
-      'Developed Python scripts to clean, reconcile and consolidate funding and account data across more than 100 account types for more than 30 affiliated companies.',
-      'Migrated repetitive Excel-based checks into Python and Pandas workflows, reducing manual handling in funding-status analysis and variance review.',
-      'Automated finance data summaries and draft report tables for auditing, brokerage investigation and cross-department account operations.',
+      'Built RESTful back-end services with FastAPI and PostgreSQL, providing reliable finance data storage and retrieval.',
+      'Developed data pipelines with Python, Pandas and SQL, consolidating more than 100 account types across more than 30 affiliated companies.',
+      'Implemented reconciliation, validation, automated analysis and Excel/VBA reporting workflows, reducing manual checks and supporting audit preparation.',
+      'Translated finance requirements into reusable Python and SQL workflows and implemented repeatable CI/CD deployments with secure CORS and environment configuration.',
     ],
   },
 ]
@@ -226,7 +242,7 @@ export const education = [
 export const contact = {
   heading: "Let's talk about software development.",
   body:
-    'Jet is open to Graduate and Junior Software Development opportunities. Get in touch by email or connect on LinkedIn.',
+    'Get in touch by email or LinkedIn, or review my work on GitHub.',
   location: 'Melbourne, Australia',
   methods: [
     { label: 'Email', value: 'jiahang.s@outlook.com', href: externalLinks.email },
