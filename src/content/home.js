@@ -233,7 +233,7 @@ export const education = [
     period: '2025',
   },
   {
-    institution: 'The University of Nottingham Ningbo China',
+    institution: 'The University of Nottingham',
     qualification: 'Bachelor of International Business Economics (Honours)',
     period: '2023',
   },
