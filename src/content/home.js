@@ -200,7 +200,6 @@ export const experience = [
     organisation: 'Robotic Marketer',
     role: 'Software Engineer',
     location: 'Melbourne, Australia',
-    period: 'May to August 2026',
     summary:
       'Developed full-stack capabilities for an AI-powered marketing platform, covering data, interfaces and cloud delivery.',
     highlights: [
@@ -214,7 +213,6 @@ export const experience = [
     organisation: 'Hangzhou Youzan Technology Co., Ltd',
     role: 'Python Developer',
     location: 'Hangzhou, China',
-    period: 'June 2021 to June 2022',
     summary:
       'Developed RESTful back-end services and automated finance data workflows for affiliated-company funding, account operations and reporting.',
     highlights: [

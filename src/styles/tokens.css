@@ -1370,8 +1370,7 @@ ol {
 }
 
 .experience-item__role,
-.experience-item__location,
-.experience-item__dates {
+.experience-item__location {
   color: var(--colour-text-muted);
   font-size: var(--font-size-small);
 }

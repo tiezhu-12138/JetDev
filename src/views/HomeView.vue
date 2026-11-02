@@ -211,7 +211,6 @@ function isExternalLink(href) {
             <h3 class="experience-item__organisation">{{ role.organisation }}</h3>
             <p class="experience-item__role">{{ role.role }}</p>
             <p class="experience-item__location">{{ role.location }}</p>
-            <p class="experience-item__dates">{{ role.period }}</p>
           </header>
 
           <div class="experience-item__body">
